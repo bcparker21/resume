@@ -3,10 +3,9 @@
 {% block app_content %}
 	<div>
 		{% if current_user.is_anonymous %}
-		<h1>{{ _('Welcome to Current Planner') }}</h1>
+		<h1>{{ _("Welcome to Brian Parker\'s Online Resume!") }}</h1>
 		{% else %}
 		<h1>{{ _('Hi, %(username)s!', username=current_user.username) }}</h1>
 		{% endif %}
 	</div>
-	{% include 'map.html' %}
 {% endblock %}
