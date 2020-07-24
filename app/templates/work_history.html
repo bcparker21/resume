@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block app_content %}
+<h1>Work History</h1>
+{% for job in jobs %}
+	<h2><a href="{{ job.url }}" target="_blank">{{ job.name }}</a></h2>
+	<h3>{{ job.title }}</h3>
+	<h3>{{ job.location }}</h3>
+	<h3>{{ moment(job.start_date).format('MMMM Y') }} to {{ moment(job.end_date).format('MMMM Y') }}</h3>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block app_content %}
+<h1>Awards & Associations</h1>
+{% for award in awards %}
+	<h2><a href="{{ award.url }}" target="=_blank">{{ award.name }}</a></h2>
+	<h3>{{ award.agency }}</h3>
+	{% if award.expiration_date %}
+		<h3>Expiration: {{ moment(award.expiration_date).format('LL') }}</h3>
+	{% endif %}
+	{% if award.license_number %}
+		<h3>License Number: {{ award.license_number }}</h3>
+	{% endif %}
+{% endfor %}
+{% endblock %}

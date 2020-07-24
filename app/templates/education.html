@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block app_content %}
+<h1>Education</h1>
+{% for school in schools %}
+	<h2><a href="{{ school.url }}" target="_blank">{{ school.name }}</a></h2>
+	<h3>{{ school.title }}</h3>
+	<h3>{{ school.location }}</h3>
+{% endfor %}
+{% endblock %}

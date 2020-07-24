@@ -19,6 +19,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
+                    <li><a href="{{ url_for('main.education') }}">{{_('Education') }}</a></li>
+                    <li><a href="{{ url_for('main.work_history') }}">{{_('Work History') }}</a></li>
+                    <li><a href="{{ url_for('main.awards') }}">{{ _('Awards & Associations') }}</a></li>
                 </ul>
                 {% if g.search_form %}
                 <form class="navbar-form navbar-left" method="get" action="{{ url_for('main.search') }}">
@@ -61,30 +64,8 @@
         {% block app_content %}{% endblock %}
     </div>
 {% endblock %}
+
 {% block scripts %}
     {{ super() }}
-    <script>
-        coords = {{ coords }}
-        bounds = {{ bounds }}
-        var map = L.map('mapid').setView(coords)
-        map.fitBounds(bounds)
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        var cityLimits = {{ poly | safe }}
-        var cityLimitStyle={
-            "color":'red',
-            "fillColor":'#a7a9ac',
-            "fillOpacity":0.3,
-            "interactive":false
-        }
-        var cityLimits = L.geoJSON(cityLimits, {style: cityLimitStyle}).addTo(map)
-        map.on('click', function(e) {
-            var pos = e.latlng;
-            console.log(e.latlng);
-
-            var marker = L.marker(
-                pos).addTo(map);
-        })
-    </script>
+    {{ moment.include_moment() }}
 {% endblock %}

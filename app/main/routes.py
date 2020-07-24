@@ -5,7 +5,7 @@ from flask import render_template, flash, redirect, url_for, request, g, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_babel import _, get_locale
 from app import db
-from app.models import User
+from app.models import User, Education, WorkHistory, Award
 from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm
 from app.main import bp
 from config import Config
@@ -109,3 +109,18 @@ def reset_password(token):
 		flash(_('Your password has been reset.'))
 		return redirect(url_for('login'))
 	return render_template('reset_password.html', form=form)
+
+@bp.route('/education')
+def education():
+	schools = Education.query.all()
+	return render_template('education.html', schools=schools)
+
+@bp.route('/work_history')
+def work_history():
+	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
+	return render_template('work_history.html', jobs=jobs)
+
+@bp.route('/awards')
+def awards():
+	awards=Award.query.all()
+	return render_template('awards.html', awards=awards)

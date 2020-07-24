@@ -69,3 +69,27 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
 def load_user(id):
 	return User.query.get(int(id))	
 		
+class Education(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	url = db.Column(db.String(140))
+	name = db.Column(db.String(120))
+	title = db.Column(db.String(120))
+	location = db.Column(db.String(120))
+
+class WorkHistory(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	url = db.Column(db.String(140))
+	name = db.Column(db.String(120))
+	title = db.Column(db.String(120))
+	location = db.Column(db.String(120))
+	start_date = db.Column(db.DateTime)
+	end_date = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Award(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	url=db.Column(db.String(140))
+	name=db.Column(db.String(120))
+	agency=db.Column(db.String(120))
+	expiration_date=db.Column(db.DateTime)
+	license_number=db.Column(db.String(30))
+		
