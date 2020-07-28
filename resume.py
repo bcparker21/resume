@@ -1,5 +1,5 @@
 from app import create_app, db
-from app.models import User, Education, WorkHistory, Award
+from app.models import User, Education, WorkHistory, Award, Duty
 
 app = create_app()
 
@@ -9,4 +9,5 @@ def make_shell_context():
 			'User': User,
 			'Education': Education,
 			'WorkHistory': WorkHistory,
-			'Award':Award}
+			'Award': Award,
+			'Duty': Duty}

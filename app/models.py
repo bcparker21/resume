@@ -77,6 +77,7 @@ class Education(db.Model):
 	location = db.Column(db.String(120))
 
 class WorkHistory(db.Model):
+	__tablename__="workhistory"
 	id = db.Column(db.Integer, primary_key=True)
 	url = db.Column(db.String(140))
 	name = db.Column(db.String(120))
@@ -84,6 +85,14 @@ class WorkHistory(db.Model):
 	location = db.Column(db.String(120))
 	start_date = db.Column(db.DateTime)
 	end_date = db.Column(db.DateTime, default=datetime.utcnow)
+	lat = db.Column(db.Float())
+	lon = db.Column(db.Float())
+	title_url=db.Column(db.String(120))
+	supervisor=db.Column(db.String(60))
+	supervisor_title=db.Column(db.String(60))
+	supervisor_email=db.Column(db.String(120))
+	supervisor_phone=db.Column(db.String(12))
+	duties=db.relationship('Duty', backref='workhistory',lazy='dynamic')
 
 class Award(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -92,4 +101,14 @@ class Award(db.Model):
 	agency=db.Column(db.String(120))
 	expiration_date=db.Column(db.DateTime)
 	license_number=db.Column(db.String(30))
+	start_date=db.Column(db.DateTime)
+	end_date=db.Column(db.DateTime)
+
+class Duty(db.Model):
+	id=db.Column(db.Integer, primary_key=True)
+	body=db.Column(db.String(140))
+	job_id=db.Column(db.Integer, db.ForeignKey('workhistory.id'))
+
+	def __repr__(self):
+		return '<Duty {}>'.format(self.body)
 		

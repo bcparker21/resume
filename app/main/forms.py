@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateTimeField, FloatField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from flask_babel import _, lazy_gettext as _l
 from app.models import User
@@ -51,3 +51,32 @@ class ResetPasswordForm(FlaskForm):
 	password2 = PasswordField(_l('Repeat Password'), validators=[DataRequired(), EqualTo('password')])
 	submit = SubmitField(_l('Reset Password'))
 		
+class AddHistoryForm(FlaskForm):
+	url = StringField(_l('Website'))
+	name = StringField(_l('Company'), validators=[DataRequired()])
+	title = StringField(_l('Job Title'), validators=[DataRequired()])
+	location = StringField(_l('Location'))
+	start_date = DateTimeField(_l('Start Date'), validators=[DataRequired()])
+	end_date = DateTimeField(_l('End Date'))
+	lat = FloatField(_l('Latitude'))
+	lon = FloatField(_l('longitude'))
+	supervisor=StringField(_l('Supervisor'))
+	supervisor_title=StringField(_l('Supervisor Title'))
+	supervisor_email=StringField(_l('Supervisor Email'), validators=[Email()])
+	supervisor_phone=StringField(_l('Supervisor Phone'))
+	submit = SubmitField(_l('Add History'))
+
+class EditHistoryForm(FlaskForm):
+	url = StringField(_l('Website'))
+	name = StringField(_l('Company'), validators=[DataRequired()])
+	title = StringField(_l('Job Title'), validators=[DataRequired()])
+	location = StringField(_l('Location'))
+	start_date = DateTimeField(_l('Start Date'), validators=[DataRequired()])
+	end_date = DateTimeField(_l('End Date'))
+	lat = FloatField(_l('Latitude'))
+	lon = FloatField(_l('longitude'))
+	supervisor=StringField(_l('Supervisor'))
+	supervisor_title=StringField(_l('Supervisor Title'))
+	supervisor_email=StringField(_l('Supervisor Email'), validators=[Email()])
+	supervisor_phone=StringField(_l('Supervisor Phone'))
+	submit = SubmitField(_l('Edit History'))

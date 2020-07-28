@@ -1,10 +1,24 @@
 {% extends "base.html" %}
 {% block app_content %}
-<h1>Work History</h1>
-{% for job in jobs %}
-	<h2><a href="{{ job.url }}" target="_blank">{{ job.name }}</a></h2>
-	<h3>{{ job.title }}</h3>
-	<h3>{{ job.location }}</h3>
-	<h3>{{ moment(job.start_date).format('MMMM Y') }} to {{ moment(job.end_date).format('MMMM Y') }}</h3>
-{% endfor %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			{% for j in jobs %}
+				<h2><a href="{{ j.url }}" target="_blank">{{ j.name }}</a></h2>
+				<h3>{{ j.title }}</h3>
+				<h3>{{ j.location }}</h3>
+				<h3>{{ moment(j.start_date).format('MMMM Y') }} to {{ moment(j.end_date).format('MMMM Y') }}</h3>
+				<p><a href="{{ url_for('main.job',title=j.title) }}">Learn More</a></p>
+			{% endfor %}
+			{% if current_user.username==bcparker21 %}
+			<p>
+			    <a href="{{ url_for('main.add_history') }}">{{ _('Add History') }}</a>
+			</p>
+			{% endif %}
+		</div>
+		<div class="col-md-9">
+			{{ map }}
+		</div>
+	</div>
+</div>
 {% endblock %}

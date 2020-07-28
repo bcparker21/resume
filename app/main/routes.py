@@ -6,9 +6,10 @@ from flask_login import current_user, login_user, logout_user, login_required
 from flask_babel import _, get_locale
 from app import db
 from app.models import User, Education, WorkHistory, Award
-from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.main import bp
+from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, AddHistoryForm, EditHistoryForm
+from app.main import bp, maps
 from config import Config
+from folium.plugins import MarkerCluster
 import folium, json
 import geopandas as gpd
 
@@ -118,9 +119,70 @@ def education():
 @bp.route('/work_history')
 def work_history():
 	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
-	return render_template('work_history.html', jobs=jobs)
+	start_coords=[45.5584432,-114.5665322]
+	m=folium.Map(location=start_coords,width=750, height=500,zoom_start=6)
+	marker_cluster=MarkerCluster().add_to(m)
+	for job in jobs:
+		popup=render_template('job_popup.html',name=job.name, title=job.title,url=job.url)
+		folium.Marker([job.lat, job.lon],popup=popup).add_to(marker_cluster)
+	m=Markup(m.get_root().render())
+	return render_template('work_history.html', jobs=jobs, map=m)
 
 @bp.route('/awards')
 def awards():
-	awards=Award.query.all()
+	awards=Award.query.order_by(Award.start_date.desc()).all()
 	return render_template('awards.html', awards=awards)
+
+@bp.route('/job/<title>')
+def job(title):
+	return render_template('job.html', title=title)
+
+@bp.route('/edit_history')
+def edit_history():
+	return render_template('edit_history.html')
+
+@bp.route('/add_history', methods=['GET', 'POST'])
+def add_history():
+	
+	form=AddHistoryForm()
+	if form.validate_on_submit():
+		job = WorkHistory(url = form.url.data,
+						  name = form.name.data,
+						  title = form.title.data,
+						  location = form.location.data,
+						  start_date = form.start_date.data,
+						  end_date = form.end_date.data,
+						  lat = form.lat.data,
+						  lon = form.lon.data,
+						  supervisor= form.supervisor.data,
+						  supervisor_title= form.supervisor_title.data,
+						  supervisor_email=form.supervisor_email.data,
+						  supervisor_phone=form.supervisor_phone.data)
+		db.session.add(job)
+		db.session.commit()
+		flash(_('Congratulations, job added!'))
+		return redirect(url_for('main.work_history'))
+	return render_template('add_history.html', form=form)
+
+# @bp.route('/edit_history/<title>')
+# def edit_history(title):
+# 	job=WorkHistory.query.filter_by(title=title).first()
+# 	form=EditHistoryForm()
+# 	if  form.validate_on_submit:
+# 		job = WorkHistory(url = form.url.data,
+# 						  name = form.name.data,
+# 						  title = form.title.data,
+# 						  location = form.location.data,
+# 						  start_date = form.start_date.data,
+# 						  end_date = form.end_date.data,
+# 						  lat = form.lat.data,
+# 						  lon = form.lon.data,
+# 						  supervisor= form.supervisor.data,
+# 						  supervisor_title= form.supervisor_title.data,
+# 						  supervisor_email=form.supervisor_email.data,
+# 						  supervisor_phone=form.supervisor_phone.data)
+# 		db.session.add(job)
+# 		db.session.commit()
+# 	elif request.method == 'GET':
+# 		form.url.data = current_user.username
+# 		form.about_me.data = current_user.about_me
