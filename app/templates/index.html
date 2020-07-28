@@ -1,11 +1,15 @@
 {% extends "base.html" %}
-
 {% block app_content %}
-	<div>
-		{% if current_user.is_anonymous %}
-		<h1>{{ _("Welcome to Brian Parker\'s Online Resume!") }}</h1>
-		{% else %}
-		<h1>{{ _('Hi, %(username)s!', username=current_user.username) }}</h1>
-		{% endif %}
+	<div class="image-container">
+		<center>
+			{% if current_user.is_anonymous %}
+			<h1>{{ _("Welcome") }}</h1>
+			{% else %}
+			<h1>{{ _('Hello, %(username)s!', username=current_user.username) }}</h1>
+			{% endif %}
+			<h2>{{ _("Let's build better communities together") }}</h2>
+			<a href="{{ url_for('main.contact') }}" class="btn btn-primary" role="button"; padding: 10px>Contact Brian</a>
+			<img src="{{ url_for('static', filename='courthouse.jpg') }}" width="100%">
+		</center>
 	</div>
 {% endblock %}

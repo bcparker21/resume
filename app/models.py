@@ -111,4 +111,4 @@ class Duty(db.Model):
 
 	def __repr__(self):
 		return '<Duty {}>'.format(self.body)
-		
+        

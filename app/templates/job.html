@@ -1,2 +1,23 @@
-<h1>HI!</h1>
-<p>{{ title }}</p>
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="col-md-6">
+	<row>
+		<h1>{{ title }}</h1>
+		<h3>{{ name }}</h3>
+		{% for duty in duties %}
+		<ul>
+			<li>{{ duty.body }}</li>
+		</ul>
+		{% endfor %}
+	</row>
+</div>
+<div class="col-md-6">
+	<row>
+		<h1>Contact Info</h1>
+		<p>{{ supervisor }}, {{ supervisor_title }}</p>
+		<p><a href="mailto: {{ supervisor_email }}">{{ supervisor_email }}</a></p>
+		<p>{{ supervisor_phone }}</p>
+	</row>
+</div>
+{% endblock %}

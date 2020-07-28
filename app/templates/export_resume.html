@@ -1,0 +1,23 @@
+{% block app_content %}
+<h1>Brian Parker</h1>
+<p>936 3rd Avenue East <br>
+Kalispell, Montana 59901</p>
+<p>509-675-0489<br>
+<a href="mailto:bcparker21@gmail.com">bcparker21@gmail.com</a></p>
+<h2>Education</h2>
+{% for e in education %}
+<h3>{{ e.name }}</h3>
+<p>{{ e.title }}</p>
+{% endfor %}
+<h2>Work History</h2>
+{% for j in jobs %}
+<h3>{{ j.name }}</h3>
+<p>{{ j.title }}<br>
+{{ moment(j.start_date).format('MMMM Y') }} to {{ moment(j.end_date).format('MMMM Y') }}</p>
+{% for duty in j.duties %}
+<ul>
+	<li>{{ duty.body }}</li>
+</ul>
+{% endfor %}
+{% endfor %}
+{% endblock %}

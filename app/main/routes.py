@@ -5,12 +5,12 @@ from flask import render_template, flash, redirect, url_for, request, g, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_babel import _, get_locale
 from app import db
-from app.models import User, Education, WorkHistory, Award
-from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, AddHistoryForm, EditHistoryForm
+from app.models import User, Education, WorkHistory, Award, Duty
+from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, AddHistoryForm, EditHistoryForm, AddDutyForm, EmptyForm
 from app.main import bp, maps
 from config import Config
 from folium.plugins import MarkerCluster
-import folium, json
+import folium, json, pdfkit
 import geopandas as gpd
 
 @bp.before_request
@@ -135,15 +135,24 @@ def awards():
 
 @bp.route('/job/<title>')
 def job(title):
-	return render_template('job.html', title=title)
+	j=WorkHistory.query.filter_by(title=title).first()
+	duties=Duty.query.filter_by(job_id=j.id)
+	return render_template('job.html',
+		name=j.name,
+		title=j.title,
+		duties=duties,
+		supervisor=j.supervisor,
+		supervisor_title=j.supervisor_title,
+		supervisor_email=j.supervisor_email,
+		supervisor_phone=j.supervisor_phone)
 
 @bp.route('/edit_history')
 def edit_history():
-	return render_template('edit_history.html')
+	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
+	return render_template('edit_history.html', jobs=jobs)
 
 @bp.route('/add_history', methods=['GET', 'POST'])
 def add_history():
-	
 	form=AddHistoryForm()
 	if form.validate_on_submit():
 		job = WorkHistory(url = form.url.data,
@@ -164,25 +173,77 @@ def add_history():
 		return redirect(url_for('main.work_history'))
 	return render_template('add_history.html', form=form)
 
-# @bp.route('/edit_history/<title>')
-# def edit_history(title):
-# 	job=WorkHistory.query.filter_by(title=title).first()
-# 	form=EditHistoryForm()
-# 	if  form.validate_on_submit:
-# 		job = WorkHistory(url = form.url.data,
-# 						  name = form.name.data,
-# 						  title = form.title.data,
-# 						  location = form.location.data,
-# 						  start_date = form.start_date.data,
-# 						  end_date = form.end_date.data,
-# 						  lat = form.lat.data,
-# 						  lon = form.lon.data,
-# 						  supervisor= form.supervisor.data,
-# 						  supervisor_title= form.supervisor_title.data,
-# 						  supervisor_email=form.supervisor_email.data,
-# 						  supervisor_phone=form.supervisor_phone.data)
-# 		db.session.add(job)
-# 		db.session.commit()
-# 	elif request.method == 'GET':
-# 		form.url.data = current_user.username
-# 		form.about_me.data = current_user.about_me
+@bp.route('/edit_history2/<title>', methods=['GET', 'POST'])
+def edit_history2(title):
+	job=WorkHistory.query.filter_by(title=title).first()
+	form=EditHistoryForm(title=title)
+	if  form.validate_on_submit():
+		job = WorkHistory(url = form.url.data,
+						  name = form.name.data,
+						  title = form.title.data,
+						  location = form.location.data,
+						  start_date = form.start_date.data,
+						  end_date = form.end_date.data,
+						  lat = form.lat.data,
+						  lon = form.lon.data,
+						  supervisor= form.supervisor.data,
+						  supervisor_title= form.supervisor_title.data,
+						  supervisor_email=form.supervisor_email.data,
+						  supervisor_phone=form.supervisor_phone.data)
+		db.session.commit()
+		# return redirect(url_for('main.edit_history'))
+	elif request.method == 'GET':
+		form.url.data = job.url
+		form.name.data = job.name
+		form.title.data = job.title
+		form.location.data = job.location
+		form.start_date.data = job.start_date
+		form.end_date.data = job.end_date
+		form.lat = job.lat
+		form.lon = job.lon
+		form.supervisor = job.supervisor
+		form.supervisor_title = job.supervisor_title
+		form.supervisor_email = job.supervisor_email
+		form.supervisor_phone = job.supervisor_phone
+	return render_template('edit_history2.html',form=form, title=title)
+
+@bp.route('/add_duty/<title>', methods=['GET', 'POST'])
+def add_duty(title):
+	job=WorkHistory.query.filter_by(title=title).first()
+	form=AddDutyForm(title=title)
+	if form.validate_on_submit:
+		duty=Duty(job_id=job.id, body=form.duty.data)
+		db.session.add(duty)
+		db.session.commit()
+		flash('Duty Added.')
+		return redirect(url_for('main.edit_history'))
+
+@bp.route('/contact')
+def contact():
+	return render_template('contact.html')
+
+@bp.route('/about')
+def about():
+	return render_template('about.html')
+
+@bp.route('/cover_letter/<username>')
+def cover_letter(username):
+	user = User.query.filter_by(username=username).first_or_404()
+	return render_template('cover_letter.html',user=user)
+
+@bp.route('/export_resume', methods=['GET','POST'])
+def export_resume():
+	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
+	education=Education.query.all()
+	duties=Duty.query.all()
+	return render_template('export_resume.html',
+		education=education,
+		jobs=jobs)
+
+@bp.route('/export_resume_pdf.pdf')
+def export_resume_pdf():
+	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
+	education=Education.query.all()
+	return pdfkit.from_string(render_template('export_resume.html',education=education,jobs=jobs),
+		False,
+		options={"enable-local-file-access":""})

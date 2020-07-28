@@ -21,11 +21,9 @@ bootstrap = Bootstrap()
 moment = Moment()
 babel = Babel()
 
-
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
-
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
@@ -76,9 +74,10 @@ def create_app(config_class=Config):
     return app
 
 
-@babel.localeselector
-def get_locale():
-    return request.accept_languages.best_match(current_app.config['LANGUAGES'])
+# @babel.localeselector
+# def get_locale():
+#     return request.accept_languages.best_match(current_app.config['LANGUAGES'])
+
 
 
 from app import models

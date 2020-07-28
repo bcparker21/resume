@@ -80,3 +80,11 @@ class EditHistoryForm(FlaskForm):
 	supervisor_email=StringField(_l('Supervisor Email'), validators=[Email()])
 	supervisor_phone=StringField(_l('Supervisor Phone'))
 	submit = SubmitField(_l('Edit History'))
+
+class AddDutyForm(FlaskForm):
+	duty=TextAreaField('Add Duty')
+	submit=SubmitField('Add Duty')
+
+class EmptyForm(FlaskForm):
+	submit=SubmitField('Submit')
+		

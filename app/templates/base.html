@@ -18,10 +18,24 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
-                    <li><a href="{{ url_for('main.education') }}">{{_('Education') }}</a></li>
-                    <li><a href="{{ url_for('main.work_history') }}">{{_('Work History') }}</a></li>
-                    <li><a href="{{ url_for('main.awards') }}">{{ _('Awards & Associations') }}</a></li>
+                    <li>
+                        <a href="{{ url_for('main.index') }}">{{ _('Home') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.education') }}">{{_('Education') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.work_history') }}">{{_('Work History') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.awards') }}">{{ _('Awards & Associations') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.about') }}">{{ _('About') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.contact') }}">{{ _('Contact') }}</a>
+                    </li>
                 </ul>
                 {% if g.search_form %}
                 <form class="navbar-form navbar-left" method="get" action="{{ url_for('main.search') }}">
@@ -38,7 +52,7 @@
                     </li>
                     {% else %}
                     <li>
-                        <a href="{{ url_for('main.user', username=current_user.username) }}">{{ _('Profile') }}</a>
+                        <a href="{{ url_for('main.cover_letter', username=current_user.username) }}">{{ _('Cover Letter') }}</a>
                     </li>
                     <li>
                         <a href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a>
@@ -68,4 +82,9 @@
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
 {% endblock %}

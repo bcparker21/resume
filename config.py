@@ -20,3 +20,4 @@ class Config(object):
 	ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
 	REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'
 	MAPBOX_API_KEY = os.environ.get('MAPBOX_API_KEY')
+	FLASK_ADMIN_SWATCH = 'cerulean'
