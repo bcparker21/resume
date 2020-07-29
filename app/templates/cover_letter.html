@@ -1,1 +1,12 @@
 {% extends "base.html" %}
+{% block app_content %}
+<div class="col-md-2"></div>
+<div class="col-md-8">
+{{ user.coverletter | safe}}
+
+<a download href="{{ url_for('main.export_resume_pdf') }}" class="btn btn-primary" role="button">Export Resume</a>
+<a download href="{{ url_for('main.export_cover_letter_pdf') }}" class="btn btn-primary" role="button">Export Cover Letter</a>
+<a href="{{ url_for('main.contact') }}" class="btn btn-primary" role="button";>Contact Brian</a>
+<p> </p></div>
+<div class="col-md-2"></div>
+{% endblock %}

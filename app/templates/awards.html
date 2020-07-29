@@ -2,18 +2,24 @@
 {% block app_content %}
 <h1>Awards & Associations</h1>
 {% for award in awards %}
-	<h2><a href="{{ award.url }}" target="=_blank">{{ award.name }}</a></h2>
-	<h3>{{ award.agency }}<br>
-	{% if award.end_date %}
-		{{ moment(award.start_date).format('MMMM Y') }} to {{ moment(award.end_date).format('MMMM Y') }}
-	{% else %} Start Date: {{ moment(award.start_date).format('MMMM Y') }}
-	{% endif %}<br>
-	{% if award.expiration_date %}
-		Expiration: {{ moment(award.expiration_date).format('MMMM Y') }}<br>
+	<div class="card bg-light mb-3e">
+		<div class="card-header">
+			<h2><a href="{{ award.url }}" target="=_blank">{{ award.name }}</a></h2>
+		</div>
+		<div class="card-body">
+			<h4>{{ award.agency }}<br>
+			{% if award.end_date %}
+				{{ moment(award.start_date).format('MMMM Y') }} to {{ moment(award.end_date).format('MMMM Y') }}
+			{% else %} Start Date: {{ moment(award.start_date).format('MMMM Y') }}
+			{% endif %}<br>
+			{% if award.expiration_date %}
+				Expiration: {{ moment(award.expiration_date).format('MMMM Y') }}<br>
 
-	{% endif %}
-	{% if award.license_number %}
-		License Number: {{ award.license_number }}<br>
-	{% endif %}</h3>
+			{% endif %}
+			{% if award.license_number %}
+				License Number: {{ award.license_number }}<br>
+			{% endif %}</h4>
+		</div>
+	</div>
 {% endfor %}
 {% endblock %}

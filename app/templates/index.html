@@ -6,7 +6,7 @@
 			{% if current_user.is_anonymous %}
 				<h1>{{ _("Welcome") }}</h1>
 			{% else %}
-				<h1>{{ _('Hello, %(username)s!', username=current_user.username) }}</h1>
+				<h1>{{ _('Hello, %(agency)s!', agency=current_user.agency) }}</h1>
 			{% endif %}
 			<h2>{{ _("Let's build better communities together") }}</h2>
 			<a href="{{ url_for('main.contact') }}" class="btn btn-primary btn-lg" role="button";>Contact Brian</a>

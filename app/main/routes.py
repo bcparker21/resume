@@ -73,13 +73,15 @@ def edit_profile():
 	form = EditProfileForm(current_user.username)
 	if form.validate_on_submit():
 		current_user.username = form.username.data
-		current_user.about_me = form.about_me.data
+		current_user.agency = form.agency.data
+		current_user.coverletter = form.coverletter.data
 		db.session.commit()
 		flash(_('Your changes have been saved.'))
-		return redirect(url_for('edit_profile'))
+		return redirect(url_for('main.edit_profile'))
 	elif request.method == 'GET':
 		form.username.data = current_user.username
-		form.about_me.data = current_user.about_me
+		form.agency.data = current_user.agency
+		form.coverletter.data = current_user.coverletter
 	return render_template('edit_profile.html', title=_('Edit Profile'), form=form)
 
 @bp.route('/reset_password_request', methods=['GET','POST'])
@@ -120,12 +122,24 @@ def education():
 def work_history():
 	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
 	start_coords=[45.5584432,-114.5665322]
-	m=folium.Map(location=start_coords,width=750, height=500,zoom_start=6)
-	marker_cluster=MarkerCluster().add_to(m)
+	m=folium.Map(location=start_coords,width=750, height=500,zoom_start=6,tiles=None,)
+	folium.raster_layers.TileLayer(
+		tiles='OpenStreetMap', name='Open Street Map').add_to(m)
+	folium.raster_layers.TileLayer(
+		tiles='stamenterrain', name='Terrain').add_to(m)
+	folium.raster_layers.WmsTileLayer(
+		url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+		layers=None,
+		name='Aerial',
+		attr='ESRI World Imagery',
+		show=False).add_to(m)
+	marker_cluster=MarkerCluster(control=False).add_to(m)
 	for job in jobs:
 		popup=render_template('job_popup.html',name=job.name, title=job.title,url=job.url)
 		folium.Marker([job.lat, job.lon],popup=popup).add_to(marker_cluster)
-	m=Markup(m.get_root().render())
+	fg=folium.FeatureGroup(name='Work History')
+	folium.LayerControl().add_to(m)
+	m=Markup(m.get_root().render())	
 	return render_template('work_history.html', jobs=jobs, map=m)
 
 @bp.route('/awards')
@@ -245,5 +259,17 @@ def export_resume_pdf():
 	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
 	education=Education.query.all()
 	return pdfkit.from_string(render_template('export_resume.html',education=education,jobs=jobs),
+		False,
+		options={"enable-local-file-access":""})
+
+@bp.route('/export_cover_letter/<username>')
+def export_cover_letter(username):
+	user=User.query.filter_by(username=username).first_or_404()
+	return render_template('export_cover_letter.html', user=user)
+
+@bp.route('/export_cover_letter_pdf.pdf')
+def export_cover_letter_pdf():
+	user=User.query.filter_by(username=current_user.username).first_or_404()
+	return pdfkit.from_string(render_template('export_cover_letter.html',user=user),
 		False,
 		options={"enable-local-file-access":""})

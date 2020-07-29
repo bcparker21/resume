@@ -2,18 +2,19 @@
 {% block app_content %}
 <div class="container">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-4">
 			{% for j in jobs %}
 				<h2><a href="{{ j.url }}" target="_blank">{{ j.name }}</a></h2>
-				<h3>{{ j.title }}</h3>
-				<h3>{{ j.location }}</h3>
-				<h3>{{ moment(j.start_date).format('MMMM Y') }} to {{ moment(j.end_date).format('MMMM Y') }}</h3>
+				<h4>{{ j.title }}<br>
+				{{ j.location }}<br>
+				{{ moment(j.start_date).format('MMMM Y') }} to {{ moment(j.end_date).format('MMMM Y') }}<br>
 				<p><a href="{{ url_for('main.job',title=j.title) }}">Learn More</a></p>
 			{% endfor %}
 		</div>
-		<div class="col-md-9" position: -webkit-sticky; position: sticky;>
+		<div class="col-md-8" position: -webkit-sticky; position: sticky;>
 			{{ map }}
-			<a download href="{{ url_for('main.export_resume_pdf') }}" class="btn btn-primary" role="button"; padding: 10px>Export Resume</a>
+			<p> </p><br>
+			<a download href="{{ url_for('main.export_resume_pdf') }}" class="btn btn-primary" role="button">Export Resume</a>
 		</div>
 	</div>
 </div>

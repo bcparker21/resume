@@ -37,6 +37,8 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
 	password_hash = db.Column(db.String(128))
 	about_me = db.Column(db.String(140))
 	last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+	agency = db.Column(db.String(120))
+	coverletter = db.Column(db.String(99999))
 	
 	def get_reset_password_token(self, expires_in=600):
 		return jwt.encode(
@@ -111,4 +113,4 @@ class Duty(db.Model):
 
 	def __repr__(self):
 		return '<Duty {}>'.format(self.body)
-        
+		
