@@ -1,1 +1,12 @@
 {% extends "base.html" %}
+{% block app_content %}
+<div class="col-md-8">
+	<row>
+		<img src="{{ url_for('static', filename='selfie.jpg') }}" width="100%">
+</div>
+<div class="col-md-4">
+	<row>
+		<p>Brian Parker</p>
+	</row>
+</div>
+{% endblock %}

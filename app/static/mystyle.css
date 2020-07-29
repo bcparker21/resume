@@ -1,7 +1,10 @@
-.image-container{
-	width: 100%;
+.image-container {
 	position: relative;
+}
+.image-text{
+	position: absolute;
 	text-align: center;
+	top: 1%;
+	transform: translateX(50%);
 	color: white;
-	background-image: url('courthouse.jpg');
 }
