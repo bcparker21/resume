@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn resume:brianparkerresume
+web: flask db upgrade; gunicorn resume:app
