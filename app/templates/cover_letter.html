@@ -4,9 +4,9 @@
 <div class="col-md-8">
 {{ user.coverletter | safe}}
 
-<a href="{{ url_for('main.export_resume') }}" class="btn btn-primary" role="button">Export Resume</a>
-<a href="{{ url_for('main.export_cover_letter', username=current_user.username) }}" class="btn btn-primary" role="button">Export Cover Letter</a>
-<a href="{{ url_for('main.contact') }}" class="btn btn-primary" role="button";>Contact Brian</a>
+<a href="{{ url_for('main.export_resume') }}" class="btn btn-primary" role="button" id="printPageButton">Export Resume</a>
+<button class="btn btn-primary" onclick="window.print()" id="printPageButton">Print Cover Letter</button>
+<a href="{{ url_for('main.contact') }}" class="btn btn-primary" role="button" id="printPageButton">Contact Brian</a>
 <p> </p></div>
 <div class="col-md-2"></div>
 {% endblock %}
