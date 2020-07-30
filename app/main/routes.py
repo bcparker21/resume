@@ -274,13 +274,12 @@ def export_cover_letter_pdf():
 		False,
 		options={"enable-local-file-access":""})
 
-@bp.route('delete_duty/<title>/<duty>', methods=['POST'])
-def delete_duty(duty, title):
-	job=WorkHistory.query.filter_by(title=title).first
+@bp.route('delete_duty/<duty>', methods=['POST'])
+def delete_duty(duty_id):
 	form=EmptyForm()
 	if form.validate_on_submit:
-		duty=Duty.query.filter_by(id=duty).first()
-	job.delete_duty(duty)
-	db.session.commit()
+		duty=Duty.query.filter_by(id=duty_id).first()
+		db.session.delete(duty)
+		db.session.commit()
 	flash('Duty deleted')
 	return redirect(url_for('add_duty',title=title))
