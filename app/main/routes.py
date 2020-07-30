@@ -225,13 +225,10 @@ def edit_history2(title):
 def add_duty(title):
 	job=WorkHistory.query.filter_by(title=title).first()
 	form=AddDutyForm(title=title)
-	if form.validate_on_submit:
-		duty=Duty(job_id=job.id, body=form.duty.data)
-		db.session.add(duty)
+	if  form.validate_on_submit():
+		duty = Duty(body=form.duty, job_id=job.id)
 		db.session.commit()
-		flash('Duty Added.')
-		# return redirect(url_for('main.edit_history'))
-	return render_template('add_duty.html', title=title)
+	return render_template('add_duty.html',form=form, title=title)
 
 @bp.route('/contact')
 def contact():
