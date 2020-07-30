@@ -95,6 +95,7 @@ class AddEducationForm(FlaskForm):
 	name = StringField(_l('Name'))
 	title = StringField(_l('Title'))
 	location = StringField(_l('Location'))
+	submit=SubmitField(_l('Add Education'))
 
 class AddAwardForm(FlaskForm):
 	url=StringField(_l('Website'))
@@ -104,4 +105,5 @@ class AddAwardForm(FlaskForm):
 	license_number=StringField(_l('License Number'))
 	start_date=StringField(_l('Start Date'))
 	end_date=StringField(_l('End Date'))
+	submit=SubmitField(_l('Add Award'))
 		
