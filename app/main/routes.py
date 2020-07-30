@@ -228,8 +228,9 @@ def add_duty(title):
 	form=AddDutyForm(title=title)
 	if  form.validate_on_submit():
 		duty = Duty(body=form.duty, job_id=job.id)
-	db.session.add(duty)
-	db.session.commit()
+		db.session.add(duty)
+		db.session.commit()
+		return redirect(url_for('add_duty', title=title))
 	return render_template('add_duty.html',form=form, title=title, duties=duties)
 
 @bp.route('/contact')
