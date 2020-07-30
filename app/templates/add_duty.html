@@ -2,6 +2,10 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
+	{% for duty in duties %}
+	<ul>
+		<p>{{ duty.body }}</p><a href="{{ url_for('delete_duty'),duty=duty.id, title=title }}">Delete</a>
+	</ul>
     <h1>{{ _('Add Duty') }}</h1>
     <h2>{{ title }}</h2>
     <div class="row">
