@@ -224,7 +224,7 @@ def edit_history2(title):
 @bp.route('/add_duty/<title>', methods=['GET', 'POST'])
 def add_duty(title):
 	job=WorkHistory.query.filter_by(title=title).first()
-	duties=Duty.query.filter_by(job_id=j.id)
+	duties=Duty.query.filter_by(job_id=job.id)
 	form=AddDutyForm(title=title)
 	if  form.validate_on_submit():
 		duty = Duty(body=form.duty, job_id=job.id)
