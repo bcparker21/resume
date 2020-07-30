@@ -88,8 +88,8 @@ class EditHistoryForm(FlaskForm):
 		self.original_title = original_title
 
 class AddDutyForm(FlaskForm):
-	duty=TextAreaField('Add Duty')
-	submit=SubmitField('Add Duty')
+	duty=StringField(_l('Add Duty'), validators=[DataRequired()])
+	submit=SubmitField(_l('Add Duty'))
 
 class EmptyForm(FlaskForm):
 	submit=SubmitField('Submit')
