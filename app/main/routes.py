@@ -283,14 +283,14 @@ def delete_duty(duty_id):
 	flash('Duty deleted')
 	return redirect(url_for('main.edit_history'))
 
-bp.route('/add_education', methods=['GET', 'POST'])
+@bp.route('/add_education', methods=(['GET', 'POST']))
 def add_education():
 	form=AddEducationForm()
 	if form.validate_on_submit():
-		school = Education(url = form.url.data,
-						  name = form.name.data,
-						  title = form.title.data,
-						  location = form.location.data)
+		school = Education(url=form.url.data,
+					name=form.name.data,
+					title=form.title.data,
+					location=form.location.data)
 		db.session.add(school)
 		db.session.commit()
 		flash(_('Congratulations, school added!'))
@@ -308,8 +308,8 @@ def add_award():
 					license_number=form.license_number.data,
 					start_date=form.start_date.data,
 					end_date=form.end_date.data)
-		db.session.add(school)
+		db.session.add(award)
 		db.session.commit()
-		flash(_('Congratulations, school added!'))
+		flash(_('Congratulations, award added!'))
 		return redirect(url_for('main.awards'))
 	return render_template('add_award.html', form=form)
