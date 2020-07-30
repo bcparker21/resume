@@ -219,7 +219,7 @@ def edit_history2(title):
 		form.supervisor_title = job.supervisor_title
 		form.supervisor_email = job.supervisor_email
 		form.supervisor_phone = job.supervisor_phone
-	return render_template('edit_history2.html',form=form, title=title, original_title=title)
+	return render_template('edit_history2.html',form=form, title=title)
 
 @bp.route('/add_duty/<title>', methods=['GET', 'POST'])
 def add_duty(title):

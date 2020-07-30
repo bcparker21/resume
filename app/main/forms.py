@@ -83,10 +83,6 @@ class EditHistoryForm(FlaskForm):
 	supervisor_phone=StringField(_l('Supervisor Phone'))
 	submit = SubmitField(_l('Edit History'))
 
-	def __init__(self, original_title, *args, **kwargs):
-		super(EditHistoryForm, self).__init__(*args, **kwargs)
-		self.original_title = original_title
-
 class AddDutyForm(FlaskForm):
 	duty=TextAreaField(_l('Add Duty'), validators=[DataRequired()])
 	submit=SubmitField(_l('Add Duty'))
