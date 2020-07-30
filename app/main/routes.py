@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from flask_babel import _, get_locale
 from app import db
 from app.models import User, Education, WorkHistory, Award, Duty
-from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, AddHistoryForm, EditHistoryForm, AddDutyForm, EmptyForm
+from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, AddHistoryForm, EditHistoryForm, AddDutyForm, EmptyForm, AddEducationForm, AddAwardForm
 from app.main import bp, maps
 from config import Config
 from folium.plugins import MarkerCluster
@@ -260,8 +260,7 @@ def export_resume_pdf():
 	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
 	education=Education.query.all()
 	return pdfkit.from_string(render_template('export_resume.html',education=education,jobs=jobs),
-		False,
-		options={"enable-local-file-access":""})
+		False)
 
 @bp.route('/export_cover_letter/<username>')
 def export_cover_letter(username):
@@ -282,3 +281,33 @@ def delete_duty(duty_id):
 	db.session.commit()
 	flash('Duty deleted')
 	return redirect(url_for('main.edit_history'))
+
+bp.route('/add_education', methods=['GET', 'POST'])
+def add_education():
+	form=AddEducationForm()
+	if form.validate_on_submit():
+		school = Education(url = form.url.data,
+						  name = form.name.data,
+						  title = form.title.data,
+						  location = form.location.data)
+		db.session.add(school)
+		db.session.commit()
+		flash(_('Congratulations, school added!'))
+		return redirect(url_for('main.education'))
+	return render_template('add_education.html', form=form)
+
+def add_award():
+	form=AddAwardForm()
+	if form.validate_on_submit():
+		award = Award(url=form.url.data,
+					name=form.name.data,
+					agency=form.agency.data,
+					expiration_date=form.expiration_date.data,
+					license_number=form.license_number.data,
+					start_date=form.start_date.data,
+					end_date=form.end_date.data)
+		db.session.add(school)
+		db.session.commit()
+		flash(_('Congratulations, school added!'))
+		return redirect(url_for('main.awards'))
+	return render_template('add_award.html', form=form)

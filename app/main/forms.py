@@ -90,3 +90,18 @@ class AddDutyForm(FlaskForm):
 class EmptyForm(FlaskForm):
 	submit=SubmitField('Submit')
 		
+class AddEducationForm(FlaskForm):
+	url = StringField(_l('Website'))
+	name = StringField(_l('Name'))
+	title = StringField(_l('Title'))
+	location = StringField(_l('Location'))
+
+class AddAwardForm(FlaskForm):
+	url=StringField(_l('Website'))
+	name=StringField(_l('Name'))
+	agency=StringField(_l('Agency'))
+	expiration_date=StringField(_l('Expiration Date'))
+	license_number=StringField(_l('License Number'))
+	start_date=StringField(_l('Start Date'))
+	end_date=StringField(_l('End Date'))
+		
