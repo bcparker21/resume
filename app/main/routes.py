@@ -231,6 +231,7 @@ def add_duty(title):
 		db.session.commit()
 		flash('Duty Added.')
 		return redirect(url_for('main.edit_history'))
+	return render_template('add_duty.html', title=title)
 
 @bp.route('/contact')
 def contact():
