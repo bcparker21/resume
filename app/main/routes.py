@@ -219,7 +219,7 @@ def edit_history2(title):
 		form.supervisor_title = job.supervisor_title
 		form.supervisor_email = job.supervisor_email
 		form.supervisor_phone = job.supervisor_phone
-	return render_template('edit_history2.html',form=form, title=title)
+	return render_template('edit_history2.html',form=form, title=title, original_title=title)
 
 @bp.route('/add_duty/<title>', methods=['GET', 'POST'])
 def add_duty(title):
@@ -280,4 +280,4 @@ def delete_duty(duty_id):
 	db.session.delete(duty)
 	db.session.commit()
 	flash('Duty deleted')
-	return redirect(url_for('add_duty',title=title))
+	return redirect(url_for('edit_history'))
