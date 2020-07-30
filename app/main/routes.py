@@ -297,6 +297,7 @@ def add_education():
 		return redirect(url_for('main.education'))
 	return render_template('add_education.html', form=form)
 
+@bp.route('/add_award', methods=(['GET', 'POST']))
 def add_award():
 	form=AddAwardForm()
 	if form.validate_on_submit():
