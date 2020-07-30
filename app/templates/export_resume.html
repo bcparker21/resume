@@ -1,27 +1,30 @@
 {% extends "base.html" %}
 {% block app_content %}
 
+<div class="col-md-12" style="text-align: left;">
 <a id="printPageButton" href="{{ url_for('main.export_resume') }}" class="btn btn-primary" role="button" onclick="window.print()">Print</a>
-<div id="content" class="print">
-<h1>Brian Parker, AICP</h1>
-<p>936 3rd Avenue East <br>
-Kalispell, Montana 59901</p>
-<p>509-675-0489<br>
-<a href="mailto:bcparker21@gmail.com">bcparker21@gmail.com</a></p>
-<h2>Education</h2>
-{% for e in education %}
-<h3>{{ e.name }}</h3>
-<p>{{ e.title }}</p>
-{% endfor %}
-<h2>Work History</h2>
-{% for j in jobs %}
-<h3>{{ j.name }}</h3>
-<p>{{ j.title }}<br>
-{{ moment(j.start_date).format('MMMM Y') }} to {{ moment(j.end_date).format('MMMM Y') }}</p>
-{% for duty in j.duties %}
-<ul>
-	<li>{{ duty.body }}</li>
-</ul>
+<div class="print">
+	
+		<h1>Brian Parker, AICP</h1>
+		<p>936 3rd Avenue East <br>
+		Kalispell, Montana 59901</p>
+		<p>509-675-0489<br>
+		<a href="mailto:bcparker21@gmail.com">bcparker21@gmail.com</a></p>
+		<u><h2>Education</h2></u>
+		{% for e in education %}
+		<h3>{{ e.name }}</h3>
+		<p>{{ e.title }}</p>
+		{% endfor %}
+		<u><h2>Work History</h2></u>
+		{% for j in jobs %}
+		<h3>{{ j.name }}</h3>
+		<p>{{ j.title }}<br>
+		{{ moment(j.start_date).format('MMMM Y') }} to {{ moment(j.end_date).format('MMMM Y') }}</p>
+		{% for duty in j.duties %}
+		<ul>
+			<li>{{ duty.body }}</li>
+		</ul>
+	</div>
 </div>
 {% endfor %}
 {% endfor %}
