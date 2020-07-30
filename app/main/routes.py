@@ -260,7 +260,8 @@ def export_resume_pdf():
 	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
 	education=Education.query.all()
 	return pdfkit.from_string(render_template('export_resume.html',education=education,jobs=jobs),
-		False)
+		False,
+		options={"enable-local-file-access":""})
 
 @bp.route('/export_cover_letter/<username>')
 def export_cover_letter(username):
