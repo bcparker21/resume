@@ -227,7 +227,7 @@ def add_duty(title):
 	duties=Duty.query.filter_by(job_id=job.id)
 	form=AddDutyForm(title=title)
 	if  form.validate_on_submit():
-		duty = Duty(body=form.duty, job_id=job.id)
+		duty = Duty(body=form.duty.data, job_id=job.id)
 		db.session.add(duty)
 		db.session.commit()
 		return redirect(url_for('add_duty', title=title))
