@@ -274,7 +274,7 @@ def export_cover_letter_pdf():
 		False,
 		options={"enable-local-file-access":""})
 
-@bp.route('/delete_duty/<duty_id>', methods=['POST'])
+@bp.route('/delete_duty/<duty_id>', methods=['GET','POST'])
 def delete_duty(duty_id):
 	duty=Duty.query.filter_by(id=duty_id).first()
 	db.session.delete(duty)
