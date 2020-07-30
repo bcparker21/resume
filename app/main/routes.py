@@ -281,4 +281,4 @@ def delete_duty(duty_id):
 	db.session.delete(duty)
 	db.session.commit()
 	flash('Duty deleted')
-	return redirect(url_for('edit_history'))
+	return redirect(url_for('main.edit_history'))
