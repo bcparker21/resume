@@ -7,14 +7,14 @@
 				<h2><a href="{{ j.url }}" target="_blank">{{ j.name }}</a></h2>
 				<h4>{{ j.title }}<br>
 				{{ j.location }}<br>
-				{{ moment(j.start_date).format('MMMM Y') }} to {{ moment(j.end_date).format('MMMM Y') }}<br>
+				{{ moment(j.start_date).format('MMMM Y') }} to {{ moment(j.end_date).format('MMMM Y') }}<br></h4>
 				<p><a href="{{ url_for('main.job',title=j.title) }}">Learn More</a></p>
 			{% endfor %}
 		</div>
 		<div class="col-md-8" position: -webkit-sticky; position: sticky;>
 			{{ map }}
 			<p> </p><br>
-			<a download href="{{ url_for('main.export_resume_pdf') }}" class="btn btn-primary" role="button">Export Resume</a>
+			<a href="{{ url_for('main.export_resume') }}" class="btn btn-primary" role="button">Export Resume</a>
 		</div>
 	</div>
 </div>
