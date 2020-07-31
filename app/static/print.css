@@ -1,0 +1,15 @@
+@media print {
+  a[href]:after {
+    content: none !important;
+  }
+  #printPageButton{
+  	display: none;
+  }
+  ul {
+  	page-break-inside: avoid;
+  	line-height: 1.0
+  }
+}
+@page {
+	margin: 2cm
+}

@@ -8,3 +8,16 @@
 	transform: translateX(50%);
 	color: white;
 }
+nav{
+	color: darkblue;
+}
+
+.navbar-light .navbar-nav > li > a:hover, .navbar-light .navbar-nav > li > a:focus {
+	background-color: lightgrey;
+	color: white;
+}
+
+
+body{
+	background: '1stStreet.jpg';
+}

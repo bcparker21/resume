@@ -162,11 +162,15 @@ def job(title):
 
 @bp.route('/edit_history')
 def edit_history():
+	if current_user.username != Config.ADMIN_USER:
+		return redirect(url_for('main.work_history'))
 	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
 	return render_template('edit_history.html', jobs=jobs)
 
 @bp.route('/add_history', methods=['GET', 'POST'])
 def add_history():
+	if current_user.username != Config.ADMIN_USER:
+		return redirect(url_for('main.work_history'))
 	form=AddHistoryForm()
 	if form.validate_on_submit():
 		job = WorkHistory(url = form.url.data,
@@ -189,6 +193,8 @@ def add_history():
 
 @bp.route('/edit_history2/<title>', methods=['GET', 'POST'])
 def edit_history2(title):
+	if current_user.username != Config.ADMIN_USER:
+		return redirect(url_for('main.work_history'))
 	job=WorkHistory.query.filter_by(title=title).first()
 	form=EditHistoryForm(title=title)
 	if  form.validate_on_submit():
@@ -223,6 +229,8 @@ def edit_history2(title):
 
 @bp.route('/add_duty/<title>', methods=['GET', 'POST'])
 def add_duty(title):
+	if current_user.username != Config.ADMIN_USER:
+		return redirect(url_for('main.work_history'))
 	job=WorkHistory.query.filter_by(title=title).first()
 	duties=Duty.query.filter_by(job_id=job.id)
 	form=AddDutyForm(title=title)
@@ -285,6 +293,8 @@ def delete_duty(duty_id):
 
 @bp.route('/add_education', methods=(['GET', 'POST']))
 def add_education():
+	if current_user.username != Config.ADMIN_USER:
+		return redirect(url_for('main.education'))
 	form=AddEducationForm()
 	if form.validate_on_submit():
 		school = Education(url=form.url.data,
@@ -299,6 +309,8 @@ def add_education():
 
 @bp.route('/add_award', methods=(['GET', 'POST']))
 def add_award():
+	if current_user.username != Config.ADMIN_USER:
+		return redirect(url_for('main.awards'))
 	form=AddAwardForm()
 	if form.validate_on_submit():
 		award = Award(url=form.url.data,
