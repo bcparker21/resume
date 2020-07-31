@@ -12,6 +12,7 @@
 		{% endfor %}
 	</row>
 </div>
+{% if current_user.is_authenticated %}
 <div class="col-md-6">
 	<row>
 		<h1>Contact Info</h1>
@@ -20,4 +21,5 @@
 		<p>{{ supervisor_phone }}</p>
 	</row>
 </div>
+{% endif %}
 {% endblock %}
