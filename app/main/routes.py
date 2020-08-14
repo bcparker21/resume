@@ -198,18 +198,18 @@ def edit_history2(title):
 	job=WorkHistory.query.filter_by(title=title).first()
 	form=EditHistoryForm(title=title)
 	if  form.validate_on_submit():
-		job = WorkHistory(url = form.url.data,
-						  name = form.name.data,
-						  title = form.title.data,
-						  location = form.location.data,
-						  start_date = form.start_date.data,
-						  end_date = form.end_date.data,
-						  lat = form.lat.data,
-						  lon = form.lon.data,
-						  supervisor= form.supervisor.data,
-						  supervisor_title= form.supervisor_title.data,
-						  supervisor_email=form.supervisor_email.data,
-						  supervisor_phone=form.supervisor_phone.data)
+		job.url = form.url.data,
+		job.name = form.name.data,
+		job.title = form.title.data,
+		job.location = form.location.data,
+		job.start_date = form.start_date.data,
+		job.end_date = form.end_date.data,
+		job.lat = form.lat.data,
+		job.lon = form.lon.data,
+		job.supervisor= form.supervisor.data,
+		job.supervisor_title= form.supervisor_title.data,
+		job.supervisor_email=form.supervisor_email.data,
+		job.supervisor_phone=form.supervisor_phone.data
 		db.session.commit()
 		return redirect(url_for('main.edit_history'))
 	elif request.method == 'GET':
