@@ -211,7 +211,7 @@ def edit_history2(title):
 						  supervisor_email=form.supervisor_email.data,
 						  supervisor_phone=form.supervisor_phone.data)
 		db.session.commit()
-		# return redirect(url_for('main.edit_history'))
+		return redirect(url_for('main.edit_history'))
 	elif request.method == 'GET':
 		form.url.data = job.url
 		form.name.data = job.name
