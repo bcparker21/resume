@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from flask_babel import _, get_locale
 from app import db
 from app.models import User, Education, WorkHistory, Award, Duty
-from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, AddHistoryForm, EditHistoryForm, AddDutyForm, EmptyForm, AddEducationForm, AddAwardForm
+from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, AddHistoryForm, EditHistoryForm, AddDutyForm, EmptyForm, AddEducationForm, AddAwardForm, EditEducationForm
 from app.main import bp, maps
 from config import Config
 from folium.plugins import MarkerCluster
@@ -166,6 +166,33 @@ def edit_history():
 		return redirect(url_for('main.work_history'))
 	jobs = WorkHistory.query.order_by(WorkHistory.start_date.desc()).all()
 	return render_template('edit_history.html', jobs=jobs)
+
+@bp.route('/edit_education')
+def edit_education():
+	if current_user.username != Config.ADMIN_USER:
+		return redirect(url_for('main.education'))
+	schools = Education.query.order_by(Education.name.desc()).all()
+	return render_template('edit_education.html', schools=schools)
+
+@bp.route('/edit_education2/<title>', methods=['GET', 'POST'])
+def edit_education2(title):
+	if current_user.username != Config.ADMIN_USER:
+		return redirect(url_for('main.education'))
+	school=Education.query.filter_by(title=title).first()
+	form=EditEducationForm(title=title)
+	if  form.validate_on_submit():
+		school.url = form.url.data
+		school.name = form.name.data
+		school.title = form.title.data
+		school.location = form.location.data
+		db.session.commit()
+		return redirect(url_for('main.edit_education'))
+	elif request.method == 'GET':
+		form.url.data = school.url
+		form.name.data = school.name
+		form.title.data = school.title
+		form.location.data = school.location
+	return render_template('edit_history2.html',form=form, title=title)
 
 @bp.route('/add_history', methods=['GET', 'POST'])
 def add_history():

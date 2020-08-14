@@ -106,4 +106,11 @@ class AddAwardForm(FlaskForm):
 	start_date=StringField(_l('Start Date'))
 	end_date=StringField(_l('End Date'))
 	submit=SubmitField(_l('Add Award'))
+
+class EditEducationForm(FlaskForm):
+	url = StringField(_l('Website'))
+	name = StringField(_l('Name'))
+	title = StringField(_l('Degree'))
+	location = StringField(_l('Location'))
+	submit=SubmitField(_l('Edit Education'))
 		
