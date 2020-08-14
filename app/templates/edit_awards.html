@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    {% for a in awards %}
+    <a href="{{ url_for('main.edit_awards2',name=a.name) }}">{{ a.name }} </a><br>
+    {% endfor %}
+{% endblock %}

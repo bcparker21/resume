@@ -101,11 +101,22 @@ class AddAwardForm(FlaskForm):
 	url=StringField(_l('Website'))
 	name=StringField(_l('Name'))
 	agency=StringField(_l('Agency'))
-	expiration_date=StringField(_l('Expiration Date'))
+	expiration_date=DateTimeField(_l('Expiration Date'))
 	license_number=StringField(_l('License Number'))
-	start_date=StringField(_l('Start Date'))
-	end_date=StringField(_l('End Date'))
+	start_date=DateTimeField(_l('Start Date'))
+	end_date=DateTimeField(_l('End Date'))
 	submit=SubmitField(_l('Add Award'))
+
+class EditAwardForm(FlaskForm):
+	url=StringField(_l('Website'))
+	name=StringField(_l('Name'))
+	agency=StringField(_l('Agency'))
+	expiration_date=DateTimeField(_l('Expiration Date'))
+	license_number=StringField(_l('License Number'))
+	start_date=DateTimeField(_l('Start Date'))
+	end_date=DateTimeField(_l('End Date'))
+	submit=SubmitField(_l('Add Award'))
+		
 
 class EditEducationForm(FlaskForm):
 	url = StringField(_l('Website'))

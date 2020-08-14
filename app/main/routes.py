@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from flask_babel import _, get_locale
 from app import db
 from app.models import User, Education, WorkHistory, Award, Duty
-from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, AddHistoryForm, EditHistoryForm, AddDutyForm, EmptyForm, AddEducationForm, AddAwardForm, EditEducationForm
+from app.main.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, AddHistoryForm, EditHistoryForm, AddDutyForm, EmptyForm, AddEducationForm, AddAwardForm, EditEducationForm, EditAwardForm
 from app.main import bp, maps
 from config import Config
 from folium.plugins import MarkerCluster
@@ -193,6 +193,39 @@ def edit_education2(title):
 		form.title.data = school.title
 		form.location.data = school.location
 	return render_template('edit_history2.html',form=form, title=title)
+
+@bp.route('/edit_awards')
+def edit_awards():
+	if current_user.username != Config.ADMIN_USER:
+		return redirect(url_for('main.awards'))
+	awards = Award.query.order_by(Award.name.desc()).all()
+	return render_template('edit_awards.html', awards=awards)
+
+@bp.route('/edit_awards2/<name>', methods=['GET', 'POST'])
+def edit_awards2(name):
+	if current_user.username != Config.ADMIN_USER:
+		return redirect(url_for('main.awards'))
+	award=Award.query.filter_by(name=name).first()
+	form=EditAwardForm(name=name)
+	if  form.validate_on_submit():
+		award.url=form.url.data
+		award.name=form.name.data
+		award.agency=form.agency.data
+		award.expiration_date=form.expiration_date.data
+		award.license_number=form.license_number.data
+		award.start_date=form.start_date.data
+		award.end_date=form.end_date.data
+		db.session.commit()
+		return redirect(url_for('main.edit_awards'))
+	elif request.method == 'GET':
+		form.url.data=award.url
+		form.name.data=award.name
+		form.agency.data=award.agency
+		form.expiration_date.data=award.expiration_date
+		form.license_number.data=award.license_number
+		form.start_date.data=award.start_date
+		form.end_date.data=award.end_date
+	return render_template('edit_awards2.html',form=form, name=name)
 
 @bp.route('/add_history', methods=['GET', 'POST'])
 def add_history():
