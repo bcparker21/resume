@@ -219,12 +219,12 @@ def edit_history2(title):
 		form.location.data = job.location
 		form.start_date.data = job.start_date
 		form.end_date.data = job.end_date
-		form.lat = job.lat
-		form.lon = job.lon
-		form.supervisor = job.supervisor
-		form.supervisor_title = job.supervisor_title
-		form.supervisor_email = job.supervisor_email
-		form.supervisor_phone = job.supervisor_phone
+		form.lat.data = job.lat
+		form.lon.data = job.lon
+		form.supervisor.data = job.supervisor
+		form.supervisor_title.data = job.supervisor_title
+		form.supervisor_email.data = job.supervisor_email
+		form.supervisor_phone.data = job.supervisor_phone
 	return render_template('edit_history2.html',form=form, title=title)
 
 @bp.route('/add_duty/<title>', methods=['GET', 'POST'])
