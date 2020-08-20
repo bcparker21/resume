@@ -1,5 +1,8 @@
 .image-container {
 	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center
 }
 .image-text{
 	position: absolute;
