@@ -12,14 +12,11 @@
 {% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-light" style="color: blue;">
+    <nav class="navbar navbar-light">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" style="color: #337ab7">
+                    Menu
                 </button>
                 <a class="navbar-brand" href="{{ url_for('main.index') }}">Brian Parker</a>
             </div>

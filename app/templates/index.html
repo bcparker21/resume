@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block app_content %}
 	<div class="image-container">
-		<img src="{{ url_for('static', filename='1stStreet.jpg') }}" width="100%">
+		<img src="{{ url_for('static', filename='1stStreet.jpg') }}" class="img-fluid" width="100%">
 		<div class="image-text">
 			{% if current_user.is_anonymous %}
 				<h1>{{ _("Welcome") }}</h1>
