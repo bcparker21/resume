@@ -54,7 +54,7 @@ html5lib==1.1
 idna==2.9
 importlib-metadata==1.7.0
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 jwcrypto==0.7
 kombu==4.6.11
 Mako==1.1.3
