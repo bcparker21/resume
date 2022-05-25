@@ -70,7 +70,7 @@ Pillow==7.2.0
 psycopg2==2.8.5
 pyarrow==0.17.1
 pycparser==2.20
-PyJWT==1.7.1
+PyJWT==2.4.0
 Pyphen==0.9.5
 pyproj==2.6.1.post1
 python-dateutil==2.8.1
